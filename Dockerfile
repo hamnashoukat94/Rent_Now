@@ -29,6 +29,5 @@ RUN composer install --no-dev --optimize-autoloader
 # Expose Render port
 EXPOSE 10000
 
-# Start Laravel server
 # Start Laravel using PHP’s built-in server
-CMD ["php", "-S", "0.0.0.0:$PORT", "public/index.php"]
+CMD php -S 0.0.0.0:$PORT -t public
