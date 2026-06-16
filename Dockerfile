@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y \
     zip \
     jpegoptim optipng pngquant gifsicle \
     vim unzip git curl \
-    && docker-php-ext-configure gd --with-jpeg --with-freetype \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
