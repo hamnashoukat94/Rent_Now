@@ -1,10 +1,17 @@
 # Use official PHP image
 FROM php:8.2-cli
 
-# Install only what Laravel needs
+# Install system dependencies for extensions
 RUN apt-get update && apt-get install -y \
     git curl unzip zip \
-    && docker-php-ext-install pdo_mysql mbstring bcmath
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    zlib1g-dev \
+    pkg-config \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) pdo_mysql mbstring bcmath gd zip
 
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
