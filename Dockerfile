@@ -1,17 +1,10 @@
-# Use official PHP image
+# Use official PHP image with GD and ZIP already available
 FROM php:8.2-cli
 
-# Install system dependencies for GD and ZIP
+# Install only essential system packages
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libzip-dev \
-    zlib1g-dev \
     git curl unzip zip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath zip
+    && docker-php-ext-install pdo_mysql mbstring bcmath
 
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
