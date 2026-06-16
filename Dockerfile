@@ -5,14 +5,12 @@ FROM php:8.2-cli
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
-    libjpeg-dev \
+    libjpeg62-turbo-dev \
     libfreetype6-dev \
     libzip-dev \
     zlib1g-dev \
     locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim unzip git curl \
+    zip unzip git curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) pdo_mysql mbstring exif pcntl bcmath gd zip
 
