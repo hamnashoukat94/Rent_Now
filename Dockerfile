@@ -1,7 +1,7 @@
-# Use official PHP image with GD and ZIP already available
+# Use official PHP image
 FROM php:8.2-cli
 
-# Install only essential system packages
+# Install only what Laravel needs
 RUN apt-get update && apt-get install -y \
     git curl unzip zip \
     && docker-php-ext-install pdo_mysql mbstring bcmath
@@ -16,7 +16,7 @@ COPY . .
 
 # Install dependencies
 ENV COMPOSER_MEMORY_LIMIT=-1
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --no-dev --optimize-autoloader
 
 # Expose Render port
 EXPOSE 10000
