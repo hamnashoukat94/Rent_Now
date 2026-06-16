@@ -1,5 +1,5 @@
 # Use official PHP image
-FROM php:8.2-cli
+FROM php:8.2-fpm
 
 # Install system dependencies for extensions
 RUN apt-get update && apt-get install -y \
@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zlib1g-dev \
     pkg-config \
+    libonig-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) pdo_mysql mbstring bcmath gd zip
 
