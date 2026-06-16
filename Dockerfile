@@ -1,5 +1,5 @@
 # Use official PHP image
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -7,13 +7,14 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libzip-dev \
     locales \
     zip \
     jpegoptim optipng pngquant gifsicle \
     vim unzip git curl
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
@@ -23,7 +24,12 @@ WORKDIR /var/www
 
 COPY . .
 
+# Install dependencies
+ENV COMPOSER_MEMORY_LIMIT=-1
 RUN composer install --optimize-autoloader --no-dev
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
+# Expose Render port
+EXPOSE 10000
 
+# Start Laravel server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=$PORT"]
