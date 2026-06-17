@@ -7,19 +7,18 @@ return [
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
-    |
-    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+    | Configure your settings for cross-origin resource sharing (CORS).
+    | This determines what cross-origin operations may execute in browsers.
+    | Adjust these settings as needed for your frontend and backend setup.
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'rentals/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    // Use .env value for flexibility, default to '*'
+    'allowed_origins' => [env('CORS_ALLOWED_ORIGINS', '*')],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +28,7 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    // Enable credentials so Sanctum cookies/session auth work
+    'supports_credentials' => true,
 
 ];

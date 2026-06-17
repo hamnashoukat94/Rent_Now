@@ -41,7 +41,7 @@
                         <h3 class="h5">{{ $car['name'] }}</h3>
                         <p class="text-muted mb-3"><strong>Rs.{{ number_format($car['price']) }}</strong> / hour</p>
                         <div class="avail-badge mb-3 d-none" id="badge-{{ str_replace(' ', '-', $car['name']) }}"></div>
-                        <button class="btn btn-dark btn-book mt-auto" onclick="checkAndBook('{{ $car['name'] }}', {{ $car['price'] }})">Check &amp; Book</button>
+                        <button class="btn btn-dark btn-book mt-auto" onclick="checkAndBook('{{ $car['name'] }}', {{ $car['price'] }});">Check &amp; Book</button>
                     </div>
                 </div>
             </div>
